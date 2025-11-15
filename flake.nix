@@ -14,6 +14,10 @@
         pkg-config
         gcc
 	      glfw
+<<<<<<< HEAD
+=======
+        valgrind
+>>>>>>> 1f3fd10 (display square)
       ];
     };
   };

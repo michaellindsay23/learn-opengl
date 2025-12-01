@@ -3,7 +3,16 @@
 
 #include "./shader_s.h"
 
+#include <glm/detail/qualifier.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include <cmath>
+#include <glm/trigonometric.hpp>
 #include <iostream>
 
 
@@ -57,10 +66,10 @@ int main() {
   // SQUARE VERTICIES
   float vertices[] = {
      //vertices          //colors
-     0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f, // top right
+     0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 1.0f, // top right
      0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f, // bottom right
     -0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f, // bottom left
-    -0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 0.0f, // top left   
+    -0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f, // top left   
   };
 
   unsigned int indices[] = {
@@ -150,6 +159,14 @@ int main() {
     /*float timeValue = glfwGetTime();
     float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
     int vertesColorLocation = glGetUniformLocation(shaderProgram, "ourColor");*/
+
+    // Transformation
+    glm::mat4 trans = glm::mat4(1.0f);
+    trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0, 0.0, 1.0));
+    //trans = glm::scale(trans, glm::vec3(0.5));
+
+    unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
     // SQUARE
     glBindVertexArray(VAO);
